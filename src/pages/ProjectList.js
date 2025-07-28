@@ -44,6 +44,19 @@ function ProjectList() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
+      didOpen: () => {
+        // Add ID to the title text
+        const titleEl = document.querySelector(".swal2-title");
+        if (titleEl) titleEl.id = "confrimDeleteText";
+
+        // Add ID to the confirm button
+        const confirmBtn = document.querySelector(".swal2-confirm");
+        if (confirmBtn) confirmBtn.id = "confirmDeleteBtn";
+
+        // Add ID to the cancel button
+        const cancelBtn = document.querySelector(".swal2-cancel");
+        if (cancelBtn) cancelBtn.id = "cancelBtn";
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         axiosInstance
@@ -57,8 +70,12 @@ function ProjectList() {
             Swal.fire({
               icon: "success",
               title: "Project deleted successfully!",
-              showConfirmButton: false,
-              timer: 1500,
+              showConfirmButton: true,
+              didOpen: () => {
+                // Add ID to the title text
+                const titleEl = document.querySelector(".swal2-confirm");
+                if (titleEl) titleEl.id = "confrimDeleteBtn";
+              },
             });
             fetchProjectList();
           })
@@ -83,15 +100,22 @@ function ProjectList() {
   return (
     <Layout>
       <div className="container">
-        <h2 className="text-center mt-5 mb-3">Project Manager</h2>
+        <h2 className="text-center mt-5 mb-3" id="porjMngTitle">
+          Project Manager
+        </h2>
         <div className="card">
           <div className="card-header">
-            <Link className="btn btn-outline-primary" to="/create">
+            <Link
+              className="btn btn-outline-primary"
+              to="/create"
+              id="createProjectBtn"
+            >
               Create New Project{" "}
             </Link>
             <button
               onClick={() => Logout()}
               className="btn btn-outline-danger float-end"
+              id="logoutBtn"
             >
               {" "}
               Logout{" "}
@@ -110,7 +134,7 @@ function ProjectList() {
                 {projectList.map((project, key) => {
                   return (
                     <tr key={key}>
-                      <td>{project.name}</td>
+                      <td id={`projectId${project.id}`}>{project.name}</td>
                       <td>{project.description}</td>
                       <td>
                         <Link
@@ -120,12 +144,14 @@ function ProjectList() {
                           Show
                         </Link>
                         <Link
+                          id={`editProject${project.id}`}
                           className="btn btn-outline-success mx-1"
                           to={`/edit/${project.id}`}
                         >
                           Edit
                         </Link>
                         <button
+                          id={`deleteProj${project.id}`}
                           onClick={() => handleDelete(project.id)}
                           className="btn btn-outline-danger mx-1"
                         >

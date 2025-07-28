@@ -1,0 +1,14 @@
+{
+  "login": {
+    "username": "sophiab",
+    "password": "sophiabpass",
+    "invalidUsername": "invalidUser",
+    "invalidPassword": "invalidPass"
+  },
+  "project": {
+    "name": "Rem Automation Assessment",
+    "description": "Automate Basic CRUD Operations",
+    "nameUpdate": "Updated: Rem Automation Assessment",
+    "descriptionUpdate": "Updated: Automate Basic CRUD Operations"
+  }
+}

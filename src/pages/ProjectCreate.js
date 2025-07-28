@@ -41,7 +41,7 @@ function ProjecCreate() {
           icon: "success",
           title: "Project saved successfully!",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1000,
         });
         setIsSaving(false);
         setName("");
@@ -61,10 +61,16 @@ function ProjecCreate() {
   return (
     <Layout>
       <div className="container">
-        <h2 className="text-center mt-5 mb-3">Create New Project</h2>
+        <h2 className="text-center mt-5 mb-3" id="createNewProjTitle">
+          Create New Project
+        </h2>
         <div className="card">
           <div className="card-header">
-            <Link className="btn btn-outline-info float-right" to="/dashboard">
+            <Link
+              className="btn btn-outline-info float-right"
+              to="/dashboard"
+              id="viewAllProjectsBtn"
+            >
               View All Projects
             </Link>
           </div>
@@ -79,7 +85,7 @@ function ProjecCreate() {
                   value={name}
                   type="text"
                   className="form-control"
-                  id="name"
+                  id="projName"
                   name="name"
                 />
               </div>
@@ -91,7 +97,7 @@ function ProjecCreate() {
                     setDescription(event.target.value);
                   }}
                   className="form-control"
-                  id="description"
+                  id="projDescription"
                   rows="3"
                   name="description"
                 ></textarea>
@@ -101,6 +107,7 @@ function ProjecCreate() {
                 onClick={handleSave}
                 type="button"
                 className="btn btn-outline-primary mt-3"
+                id="saveProjectBtn"
               >
                 Save Project
               </button>

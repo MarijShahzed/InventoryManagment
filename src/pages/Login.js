@@ -6,8 +6,8 @@ import Layout from "../components/Layout";
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("admin");
-  const [password, setPassword] = useState("11");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
@@ -35,12 +35,6 @@ function Login() {
       .then(function (response) {
         localStorage.setItem("user", JSON.stringify(response.data));
         localStorage.setItem("token", response.data.token);
-        Swal.fire({
-          icon: "success",
-          title: "Login successfully!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
         navigate("/dashboard");
         setIsSaving(false);
         setEmail("");
@@ -78,7 +72,7 @@ function Login() {
                       className="form-control"
                       id="floatingInput"
                       placeholder="name@example.com"
-                      value="admin"
+                      // value="admin"
                     />
                     <label htmlFor="floatingInput">Email address</label>
                   </div>
@@ -92,7 +86,7 @@ function Login() {
                       className="form-control"
                       id="floatingPassword"
                       placeholder="Password"
-                      value="11"
+                      // value="11"
                     />
                     <label htmlFor="floatingPassword">Password</label>
                   </div>
@@ -103,6 +97,7 @@ function Login() {
                       onClick={handleSave}
                       type="submit"
                       className="btn btn-primary btn-login text-uppercase fw-bold"
+                      id="signInBtn"
                     >
                       Sign in
                     </button>

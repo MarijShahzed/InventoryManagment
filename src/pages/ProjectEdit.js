@@ -84,7 +84,11 @@ function ProjectEdit() {
         <h2 className="text-center mt-5 mb-3">Edit Project</h2>
         <div className="card">
           <div className="card-header">
-            <Link className="btn btn-outline-info float-right" to="/dashboard">
+            <Link
+              className="btn btn-outline-info float-right"
+              to="/dashboard"
+              id="viewAllProjectsBtn"
+            >
               View All Projects
             </Link>
           </div>
@@ -99,7 +103,7 @@ function ProjectEdit() {
                   value={name}
                   type="text"
                   className="form-control"
-                  id="name"
+                  id="nameEdit"
                   name="name"
                 />
               </div>
@@ -111,12 +115,13 @@ function ProjectEdit() {
                     setDescription(event.target.value);
                   }}
                   className="form-control"
-                  id="description"
+                  id="descriptionEdit"
                   rows="3"
                   name="description"
                 ></textarea>
               </div>
               <button
+                id="updateProjectBtn"
                 disabled={isSaving}
                 onClick={handleSave}
                 type="button"
