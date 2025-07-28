@@ -1,0 +1,717 @@
+{
+	"info": {
+		"_postman_id": "17bb1fc3-00eb-484f-a622-acd9654b7cc0",
+		"name": "REST API basics: CRUD, test & variable",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47092508",
+		"_collection_link": "https://avionics-physicist-11523936-1824553.postman.co/workspace/0520ac11-b416-4597-89b2-dac6904a9ca1/collection/47092508-17bb1fc3-00eb-484f-a622-acd9654b7cc0?action=share&source=collection_link&creator=47092508"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const requestBody = pm.request.body.raw;",
+							"",
+							"try {",
+							"    const body = JSON.parse(requestBody);",
+							"",
+							"    if (!body.username || !body.password) {",
+							"        throw new Error(\"Missing username or password in request body\");",
+							"    }",
+							"",
+							"    console.log(\"✅ Username and password found in request body.\");",
+							"} catch (error) {",
+							"    console.error(\"❌ Pre-request validation failed:\", error.message);",
+							"    // Prevent the request from being sent",
+							"    postman.setNextRequest(null); ",
+							"    throw error;",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Response contains username\", function () {",
+							"  pm.expect(response.username).to.exist;",
+							"});",
+							"",
+							"pm.test(\"Response contains accessToken\", function () {",
+							"  pm.expect(response.accessToken).to.exist;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "origin",
+						"value": "http://localhost:3000"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "http://localhost:3000/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "cross-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"sophiab\",\n    \"password\": \"sophiabpass\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/auth/login",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllProjects",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"  pm.expect(response).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Each item has an id\", function () {",
+							"  response.forEach(item => {",
+							"    pm.expect(item).to.have.property(\"id\");",
+							"  });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "origin",
+						"value": "http://localhost:3000"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "http://localhost:3000/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "cross-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "x-binarybox-api-key",
+						"value": "binarybox_api_key_VzO8M31mfzUAW58MBuDkyVX68IWufWJWW7m5BqqSi3FSXHHwKeHjuXQzOC7QdACzffplQ93npFb6Q3sMQLeImXxkz3IHQDkWy1yt"
+					}
+				],
+				"url": {
+					"raw": "https://mock-api.binaryboxtuts.com/api/projects",
+					"protocol": "https",
+					"host": [
+						"mock-api",
+						"binaryboxtuts",
+						"com"
+					],
+					"path": [
+						"api",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewProject",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"try {",
+							"  const requestBody = JSON.parse(pm.request.body.raw);",
+							"",
+							"  pm.test(\"Request body contains 'name' and 'description'\", function () {",
+							"    pm.expect(requestBody).to.have.property(\"name\");",
+							"    pm.expect(requestBody).to.have.property(\"description\");",
+							"  });",
+							"",
+							"  pm.test(\"'name' is a non-empty string\", function () {",
+							"    pm.expect(requestBody.name).to.be.a(\"string\").and.not.empty;",
+							"  });",
+							"",
+							"  pm.test(\"'description' is a non-empty string\", function () {",
+							"    pm.expect(requestBody.description).to.be.a(\"string\").and.not.empty;",
+							"  });",
+							"",
+							"} catch (e) {",
+							"  console.error(\"❌ Invalid JSON in request body\");",
+							"  throw new Error(\"Invalid request body: not valid JSON\");",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 or 201\", function () {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Response contains 'id'\", function () {",
+							"  pm.expect(response).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"'id' should not be null or undefined\", function () {",
+							"  pm.expect(response.id).to.not.be.null;",
+							"  pm.expect(response.id).to.not.be.undefined;",
+							"});",
+							"",
+							"pm.test(\"Save project ID to environment\", function () {",
+							"  pm.expect(response).to.have.property(\"id\");",
+							"  console.log(\"projectId is\", response.id);",
+							"  pm.environment.set(\"project_id\", response.id);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "origin",
+						"value": "http://localhost:3000"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "http://localhost:3000/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "cross-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "x-binarybox-api-key",
+						"value": "binarybox_api_key_VzO8M31mfzUAW58MBuDkyVX68IWufWJWW7m5BqqSi3FSXHHwKeHjuXQzOC7QdACzffplQ93npFb6Q3sMQLeImXxkz3IHQDkWy1yt"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Create New Project from Api\",\n    \"description\": \"Demonstrating Creating a new project by Api\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mock-api.binaryboxtuts.com/api/projects",
+					"protocol": "https",
+					"host": [
+						"mock-api",
+						"binaryboxtuts",
+						"com"
+					],
+					"path": [
+						"api",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProject",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Check if the URL contains a numeric ID",
+							"const url = pm.request.url.toString();",
+							"const idMatch = url.match(/\\/(\\d+)(\\?|$)/);  // Matches numeric ID at end or before query params",
+							"",
+							"try {",
+							"  const requestBody = JSON.parse(pm.request.body.raw);",
+							"",
+							"  pm.test(\"Request body contains 'name' and 'description'\", function () {",
+							"    pm.expect(requestBody).to.have.property(\"name\");",
+							"    pm.expect(requestBody).to.have.property(\"description\");",
+							"  });",
+							"",
+							"  pm.test(\"'name' is a non-empty string\", function () {",
+							"    pm.expect(requestBody.name).to.be.a(\"string\").and.not.empty;",
+							"  });",
+							"",
+							"  pm.test(\"'description' is a non-empty string\", function () {",
+							"    pm.expect(requestBody.description).to.be.a(\"string\").and.not.empty;",
+							"  });",
+							"",
+							"} catch (e) {",
+							"  throw new Error(\"❌ Invalid or missing JSON in request body.\");",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Status code check",
+							"pm.test(\"Status code is 200 or 201\", function () {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"// ✅ Parse request and response",
+							"const response = pm.response.json();",
+							"const requestBody = JSON.parse(pm.request.body.raw);",
+							"",
+							"// ✅ Assert name and description match the request",
+							"pm.test(\"Response 'name' matches request\", function () {",
+							"  pm.expect(response.name).to.eql(requestBody.name);",
+							"});",
+							"",
+							"pm.test(\"Response 'description' matches request\", function () {",
+							"  pm.expect(response.description).to.eql(requestBody.description);",
+							"});",
+							"",
+							"pm.test(\"Response contains 'id'\", function () {",
+							"  pm.expect(response).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"'id' should not be null or undefined\", function () {",
+							"  pm.expect(response.id).to.not.be.null;",
+							"  pm.expect(response.id).to.not.be.undefined;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "origin",
+						"value": "http://localhost:3000"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "http://localhost:3000/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "cross-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "x-binarybox-api-key",
+						"value": "binarybox_api_key_VzO8M31mfzUAW58MBuDkyVX68IWufWJWW7m5BqqSi3FSXHHwKeHjuXQzOC7QdACzffplQ93npFb6Q3sMQLeImXxkz3IHQDkWy1yt"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Updating New Project from Api\",\n    \"description\": \"Demonstrating Updating a new project by Api\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://mock-api.binaryboxtuts.com/api/projects/{{project_id}}",
+					"protocol": "https",
+					"host": [
+						"mock-api",
+						"binaryboxtuts",
+						"com"
+					],
+					"path": [
+						"api",
+						"projects",
+						"{{project_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProject",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							"const rawUrl = pm.request.url.toString();",
+							"const resolvedUrl = pm.variables.replaceIn(rawUrl);",
+							"const projectId = pm.environment.get(\"project_id\");",
+							"",
+							"pm.test(\"URL contains the resolved project ID\", function () {",
+							"  pm.expect(projectId).to.exist;",
+							"  pm.expect(resolvedUrl).to.include(projectId);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Check for status code",
+							"pm.test(\"Status code is 200 or 204\", function () {",
+							"  pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+							"});",
+							"",
+							"// ✅ Parse response JSON",
+							"const response = pm.response.json();",
+							"",
+							"// ✅ Check that 'message' key is present",
+							"pm.test(\"Response contains 'message' key\", function () {",
+							"  pm.expect(response).to.have.property(\"message\");",
+							"});",
+							"",
+							"// ✅ Check message value is \"Deleted\"",
+							"pm.test(\"Message is 'Deleted'\", function () {",
+							"  pm.expect(response.message).to.eql(\"Deleted\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-GB,en-US;q=0.9,en;q=0.8"
+					},
+					{
+						"key": "origin",
+						"value": "http://localhost:3000"
+					},
+					{
+						"key": "priority",
+						"value": "u=1, i"
+					},
+					{
+						"key": "referer",
+						"value": "http://localhost:3000/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "cross-site"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "x-binarybox-api-key",
+						"value": "binarybox_api_key_VzO8M31mfzUAW58MBuDkyVX68IWufWJWW7m5BqqSi3FSXHHwKeHjuXQzOC7QdACzffplQ93npFb6Q3sMQLeImXxkz3IHQDkWy1yt"
+					}
+				],
+				"url": {
+					"raw": "https://mock-api.binaryboxtuts.com/api/projects/{{project_id}}",
+					"protocol": "https",
+					"host": [
+						"mock-api",
+						"binaryboxtuts",
+						"com"
+					],
+					"path": [
+						"api",
+						"projects",
+						"{{project_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
